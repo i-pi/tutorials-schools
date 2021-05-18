@@ -1,0 +1,31 @@
+
+We are ready to start
+Reading RESTART ...
+(This can take a while)
+fetching ffsocket
+ # Initializing system object 
+ # Initializing simulation object 
+ # i-PI loaded input file:  RESTART
+We have 5 atoms.
+We are using asr = poly
+
+Diagonalization....
+Final lowest 15 frequencies (cm^-1)
+[ 1382.980759  1383.070797  1383.092017  1550.08755   1550.182706
+  2991.885031  3164.166119  3164.238605  3164.447573]
+
+We are done
+Nbeads 160
+
+Qtras: 9.298069 bohr^-3
+Qrot: 438.760518
+logQvib_rp: -47.336993
+A file with the frequencies in atomic units was generated
+
+
+Remember that the output obtained from this script simply gives you components that you can use in order to calculate a rate or a tunneling splitting in the instanton approximation.
+Use, for example, the references below in order to obtain final desired results.
+Instanton Rate: J. Phys. Chem. Lett.  7, 4374(2016)
+Tunneling Splitting: J. Chem. Phys. 134, 054109 (2011)
+
+

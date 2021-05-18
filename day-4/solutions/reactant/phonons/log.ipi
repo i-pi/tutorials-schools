@@ -1,0 +1,65 @@
+
+ ____       ____       ____       ____
+/    \     /    \     /    \     /    |  #################################  |
+\__#_/     \____/     \____/     \_#__/
+   #    _        _______  _____    #
+   #   (_)      |_   __ \|_   _|   #      -*-     Development version    -*-
+   #   __  ______ | |__) | | |     #
+   Y  [  ||______||  ___/  | |     #      A Python interface for (ab initio)
+  0 0  | |       _| |_    _| |_    #      (path integral) molecular dynamics.
+   #  [___]     |_____|  |_____|   #
+ __#_       ____       ____       _#__
+/  # \     /    \     /    \     / #  \
+|  #################################  |
+\____/     \____/     \____/     \____/
+
+    
+fetching ffsocket
+ # Initializing system object 
+ # Initializing simulation object 
+Initializing from file init.xyz. Dimension: length, units: automatic, cell_units: automatic
+Initializing from file init.xyz. Dimension: length, units: automatic, cell_units: automatic
+Initializing from file init.xyz. Dimension: length, units: automatic, cell_units: automatic
+Initializing from file init.xyz. Dimension: length, units: automatic, cell_units: automatic
+Initializing from file init.xyz. Dimension: length, units: automatic, cell_units: automatic
+ !W! Overwriting previous cell parameters
+ !W! Momenta not specified in initialize. Will start with zero velocity if they are not specified in beads.
+Import of PyFFTW unsuccessful, using NumPy library instead
+ # i-PI loaded input file:  input.xml
+ --- begin input file content ---
+<simulation mode="static" verbosity="medium">
+    <output prefix='min'>
+        <properties stride='1' filename='out'>  [ step, potential{electronvolt}] </properties>
+        <trajectory stride="1" filename="xc" format="xyz">x_centroid{angstrom}</trajectory>
+   </output>
+   <total_steps>400       </total_steps>
+   <ffsocket name="aims" mode="unix" >
+       <address> localhost </address>
+   </ffsocket>
+   <system >
+       <initialize nbeads='1'> 
+           <file mode='xyz' >  init.xyz </file>
+           <cell mode='abc'> [200.0,  200.0,  200.0  ] </cell>
+       </initialize>
+       <forces>
+          <force forcefield="aims"> </force>
+       </forces>
+      <motion mode="vibrations">
+        <vibrations mode="fd">
+            <pos_shift> 0.01  </pos_shift>
+            <prefix> phonons </prefix>
+            <asr> none </asr>
+         </vibrations>
+      </motion>
+   </system>
+</simulation>
+ ---  end input file content  ---
+Created unix socket with address localhost
+ @ForceField: Starting the polling thread main loop.
+ @SOCKET:   Client asked for connection from . Now hand-shaking.
+ @SOCKET:   Handshaking was successful. Added to the client list.
+ # Average timings at MD step       0. t/step: 7.23970e-02
+SOFTEXIT CALLED FROM THREAD <Thread(Thread-19, started daemon 140621381625600)> Dynamic matrix is calculated. Exiting simulation
+ !W! Soft exit has been requested with message: 'Dynamic matrix is calculated. Exiting simulation'. Cleaning up.
+ @SOCKET: Shutting down the driver interface.
+SOFTEXIT CALLED FROM THREAD <_MainThread(MainThread, started 140621738768128)>  @ SIMULATION: Exiting cleanly.

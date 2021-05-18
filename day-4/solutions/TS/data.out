@@ -1,0 +1,34 @@
+
+We are ready to start
+Reading RESTART ...
+(This can take a while)
+fetching ffsocket
+ # Initializing system object 
+ # Initializing simulation object 
+ # i-PI loaded input file:  RESTART
+We have 6 atoms.
+We are using asr = poly
+
+Diagonalization....
+Final lowest 15 frequencies (cm^-1)
+[-1486.883818   541.881086   541.885608  1084.081704  1084.123658
+  1182.141391  1441.553057  1441.559025  1831.153161  3034.03602
+  3170.518629  3170.536208]
+Note: Deleted frequency for computing Qvib  -1486.883818 cm^-1
+
+We are done
+Partition functions at 300.000000 K
+
+Qtras: 10.187982 bohr^-3
+Qrot: 1206.150975
+logQvib: -44.278404
+Potential energy at TS:  0.650583 eV, V/kBT 25.165639
+
+
+
+Remember that the output obtained from this script simply gives you components that you can use in order to calculate a rate or a tunneling splitting in the instanton approximation.
+Use, for example, the references below in order to obtain final desired results.
+Instanton Rate: J. Phys. Chem. Lett.  7, 4374(2016)
+Tunneling Splitting: J. Chem. Phys. 134, 054109 (2011)
+
+
