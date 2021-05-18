@@ -1,0 +1,32 @@
+<simulation verbosity='medium'>
+   <output prefix='ice-sc'>
+      <properties stride='4' filename='out'>  [ step, time{picosecond}, conserved, temperature{kelvin}, kinetic_cv, potential, kinetic_opsc, kinetic_tdsc, potential_opsc, potential_tdsc] </properties> <!-- also print out Suzuki-Chin estimators -->
+      <trajectory stride='400' filename='pos' format='pdb' cell_units='angstrom'> positions{angstrom}</trajectory> <!-- note that only even beads make sense in a SC trajectory -->
+      <checkpoint stride='4000'/>
+   </output>
+   <total_steps>100000</total_steps>
+   <prng><seed>31415</seed></prng>
+   <ffsocket name='lammps' mode='unix'>
+      <address>lammps_ice</address>
+   </ffsocket>
+   <system>
+      <initialize nbeads='32'>
+         <file mode='pdb' units='angstrom'> ../data/ice-96.pdb </file>
+         <velocities mode='thermal' units='kelvin'> 100 </velocities>
+         <cell>  [   25.6156, 0, 0, 0, 29.5783, 0, 0, 0, 27.8867 ]  </cell>
+      </initialize>   
+      <forces><force forcefield='lammps' >  </force></forces>
+      <ensemble>
+         <temperature units='kelvin'> 100 </temperature>
+      </ensemble>
+      <motion mode='dynamics'>
+	<dynamics mode='sc'> <!-- this is in practice a SC-NVT integrator. Will use finite differences to evaluate the Hessian terms -->
+          <thermostat mode='pile_l'>
+            <tau units='femtosecond'> 100 </tau>
+            <pile_lambda> 0.5 </pile_lambda>
+          </thermostat>
+          <timestep units='femtosecond'> 0.25 </timestep>
+	</dynamics>
+      </motion>
+   </system>
+</simulation>
