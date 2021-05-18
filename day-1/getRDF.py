@@ -36,7 +36,6 @@ from ipi.utils.io import read_file
 def RDF(prefix, filetype, A, B, nbins, r_min, r_max, width, ss=0, unit='angstrom'):
 
     # Adding fortran functions (when exist)
-    sys.path.append(os.path.abspath(os.path.dirname(sys.argv[0]))[:-2] + 'f90')
     try:
         import fortran
     except:
@@ -48,7 +47,7 @@ def RDF(prefix, filetype, A, B, nbins, r_min, r_max, width, ss=0, unit='angstrom
     nbins = int(nbins)
 
     fns_pos = sorted(glob.glob(prefix + ".pos*"))
-    print(fns_pos)
+    #print(fns_pos)
     fn_out_rdf = prefix + '.' + A + B + ".rdf.dat"
     fn_out_rdf2 = prefix + '.' + A + B + ".rdf2.dat" 
     fn_out_rdf3 = prefix + '.' + A + B + ".rdf3.dat" 
@@ -57,16 +56,6 @@ def RDF(prefix, filetype, A, B, nbins, r_min, r_max, width, ss=0, unit='angstrom
 
     # check that we found the same number of positions files
     nbeads = len(fns_pos)
-
-    # print some information
-    print('number of beads = {:d}'.format(nbeads))
-    print()
-    print('positions file names:')
-    #print('{:s}'.format(zip(fns_pos)))
-    print()
-    print('output file names:')
-    print(fn_out_rdf)
-    print()
 
     # open input and output files
     ipos = [open(fn, "r") for fn in fns_pos]
@@ -103,7 +92,7 @@ def RDF(prefix, filetype, A, B, nbins, r_min, r_max, width, ss=0, unit='angstrom
     while noteof:  # Reading input files and calculating PPI correction
 
         if ifr % 100 == 0:
-            print('\rProcessing frame {:d}'.format(ifr), end=' ')
+            print('\r number of beads = {:d},  Processing frame {:d}'.format(nbeads, ifr), end=" ")
             sys.stdout.flush()
 
         try:
