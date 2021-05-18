@@ -1,0 +1,31 @@
+<simulation verbosity="high">
+  <output prefix="simulation">
+    <properties stride="4" filename="out">  [ time{picosecond}, conserved, temperature{kelvin}, kinetic_cv(O){electronvolt}, kinetic_cv(H){electronvolt}, potential{electronvolt} ] </properties>
+    <trajectory filename="pos" format="xyz" stride="40" cell_units="angstrom"> positions{angstrom} </trajectory>
+    <checkpoint stride="400" filename="chk" overwrite="true"/>
+  </output>
+  <total_steps>40000</total_steps>
+  <prng><seed>23658</seed></prng>
+  <ffsocket mode="unix" pbc="false" name="driver">
+    <address>driver.16</address>
+      <port>31400</port> <latency>0.001</latency> <timeout>400</timeout>
+  </ffsocket>
+  <system>
+    <initialize nbeads="16"> 
+      <file mode="chk"> init.chk </file>
+    </initialize>
+    <forces><force forcefield="driver"/></forces>
+    <ensemble>
+      <temperature units="kelvin">300</temperature>
+    </ensemble>
+    <motion mode="dynamics">
+      <fixcom>False</fixcom>
+      <dynamics mode="nvt">
+	<timestep units="femtosecond">0.25</timestep>
+            <thermostat mode="pile_l">
+              <tau units="femtosecond"> 100 </tau>
+	</thermostat>
+      </dynamics>
+    </motion>
+  </system>
+</simulation>

@@ -1,0 +1,32 @@
+<simulation verbosity="high">
+   <ffsocket mode='unix' name="cp2k" pbc="false">
+      <latency>  1.00000000e-04</latency> <address>driver.ch5.001</address>
+   </ffsocket>
+   <total_steps>80000</total_steps>
+   <output prefix="simulation">
+      <properties stride="4" filename="out"> [ step, time{femtosecond}, conserved, temperature, kinetic_cv, 
+            potential, kinetic_cv(H), kinetic_cv(C) ] </properties>
+      <trajectory filename="pos" format="pdb" stride="4" cell_units="angstrom"> positions{angstrom} </trajectory>
+   </output>
+   <prng>
+      <seed>18885</seed>
+   </prng>
+   <system>
+   <initialize nbeads="001">
+    <file mode="chk"> init.chk </file>
+    <cell mode="abc"> [ 25., 25.0, 25.0 ]  </cell>
+    <velocities mode="thermal" units='kelvin'> 100 </velocities>
+   </initialize>
+   <forces> <force forcefield="cp2k"> </force>   </forces>
+  <motion mode='dynamics'>
+   <dynamics mode='nvt'>
+  <timestep units="femtosecond"> 0.25 </timestep>
+  <thermostat mode='pile_l'> <tau units="femtosecond"> 100 </tau>
+  </thermostat>
+  </dynamics>
+  </motion>
+  <ensemble>
+    <temperature units='kelvin'> 100.0 </temperature>
+   </ensemble>
+   </system>
+</simulation>

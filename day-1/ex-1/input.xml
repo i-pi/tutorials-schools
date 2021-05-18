@@ -1,0 +1,38 @@
+<simulation verbosity="high">
+  <output prefix="gas-nvt-300k">
+      <properties stride='4' filename='out'>
+       [ step, time{picosecond}, conserved, temperature{kelvin}, potential  ]
+      </properties>
+      <trajectory filename='xc' stride='20'>x_centroid{angstrom}</trajectory>
+      <checkpoint filename="chk" stride="1000" overwrite="true"/>
+  </output>
+  <prng><seed> 3924</seed></prng>
+  <total_steps>800000</total_steps>
+  <ffsocket name="tip4p" pbc="true" mode="unix">
+    <address> 300K-G.0 </address>
+  </ffsocket>  
+  <system>
+    <initialize nbeads="1">
+      <file mode="pdb"> water-gas.pdb </file>
+      <velocities mode="thermal" units="kelvin"> 300  </velocities>
+    </initialize>
+    <forces>
+      <force forcefield="tip4p"> </force>
+    </forces>
+    <ensemble>
+      <temperature units="kelvin"> 300 </temperature>
+    </ensemble>
+    <motion mode="dynamics">
+      <fixcom>False</fixcom>
+      <dynamics mode="nvt">
+         <timestep units="femtosecond"> 0.5 </timestep>
+         <thermostat mode="pile_l">
+           <tau units="femtosecond">100</tau> 
+           <pile_lambda>0.1</pile_lambda>
+         </thermostat>
+      </dynamics>
+    </motion>
+  </system>
+</simulation>
+
+
