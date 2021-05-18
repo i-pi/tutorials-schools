@@ -1,0 +1,45 @@
+<simulation verbosity='medium'>
+   <output prefix='ice-sc-rpc'>
+      <properties stride='4' filename='out'>  [ step, time{picosecond}, conserved, temperature{kelvin}, kinetic_cv, potential, kinetic_opsc, kinetic_tdsc, potential_opsc, potential_tdsc] </properties>
+      <properties stride='4' filename='mts'>  [ pot_component(0), pot_component(1) ] </properties>  <!-- print out separately the two components of the force, for debugging and testing purposes -->
+      <trajectory stride='400' filename='pos' format='pdb' cell_units='angstrom'> positions{angstrom} </trajectory>
+      <checkpoint stride='4000'/>
+   </output>
+   <total_steps>100000</total_steps>
+   <prng><seed>31415</seed></prng>
+   <!-- note we define two forcefield sockets. one will deal with bonded interactions, the other with long-range ones. 
+        obviously, the details of the interaction has to be defined in the input of the client code. -->
+   <ffsocket name='lammps.short' mode='unix'>
+      <address>lammps_ice.short</address>
+   </ffsocket>
+   <ffsocket name='lammps.long' mode='unix'>
+      <address>lammps_ice.long</address>
+   </ffsocket>
+   <system>
+      <initialize nbeads='32'>
+         <file mode='pdb' units='angstrom'> ../data/ice-96.pdb </file>
+         <velocities mode='thermal' units='kelvin'> 100 </velocities>
+         <cell>  [   25.6156, 0, 0, 0, 29.5783, 0, 0, 0, 27.8867 ]  </cell>
+      </initialize>   
+      <!-- here we use the possibility of combining forces from multiple sources.
+           if we specify a nbeads attribute for one of the drivers, a ring-polymer contraction
+           procedure will be applied transparently. this is fully compatible with high-order integrators.
+           neat, huh? -->
+      <forces>
+          <force forcefield='lammps.long' nbeads='8'> </force>
+          <force forcefield='lammps.short' > </force>
+      </forces>
+      <ensemble>
+         <temperature units='kelvin'> 100 </temperature>
+      </ensemble>
+      <motion mode='dynamics'> <!-- note that the RPC procedure is self-contained within the forces evaluator -->
+	<dynamics mode='sc'>
+          <thermostat mode='pile_l'>
+            <tau units='femtosecond'> 100 </tau>
+            <pile_lambda> 0.5 </pile_lambda>
+          </thermostat>
+          <timestep units='femtosecond'> 0.25 </timestep>
+	</dynamics>
+      </motion>
+   </system>
+</simulation>
