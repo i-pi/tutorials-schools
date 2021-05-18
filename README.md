@@ -1,3 +1,4 @@
 # tutorials-schools
-This repository contains 4 days of tutorials for the PIMD school in 2021. 
+This repository contains 4 tutorials related to the i-PI code. Similar versions of these tutorials have been conducted at Path Integral Quantum Mechanics schools in CECAM.
+
 The tutorials are in jupyter-notebook format and can be found directly in the day-# folders.
