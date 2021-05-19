@@ -1,0 +1,30 @@
+<simulation>
+   <output prefix='h2o-ice-nve'>
+      <properties stride='100' filename='out'>  [ step, time{picosecond}, conserved, temperature{kelvin}, kinetic_cv, potential, pressure_cv{megapascal}] </properties>
+      <trajectory filename='xc' stride='200' format='xyz' cell_units='angstrom'> x_centroid{angstrom} </trajectory>
+      <trajectory filename='vc' stride='2' cell_units='angstrom'> v_centroid </trajectory> 
+      <checkpoint filename='restart' stride='2000' />
+   </output>
+   <total_steps>20000</total_steps>
+   <prng><seed>32xxx845</seed></prng>
+   <ffsocket mode='unix' name='lammps'>
+       <address>nve-h2o-xxx</address>
+   </ffsocket>
+   <system>
+     <initialize nbeads='1'>
+         <file mode='chk'> ../../checkpoint-nvt/h2o-ice-nvt.restart_xxx </file>
+         <velocities mode="thermal" units='kelvin'> 200 </velocities>
+     </initialize>
+     <forces>
+         <force forcefield='lammps' />
+     </forces>
+     <motion mode='dynamics'>
+        <dynamics mode='nve'>
+        <timestep units='femtosecond'> 0.5</timestep>
+        </dynamics>
+     </motion>
+     <ensemble>
+        <temperature units='kelvin'> 200 </temperature>
+     </ensemble>
+   </system>
+</simulation>

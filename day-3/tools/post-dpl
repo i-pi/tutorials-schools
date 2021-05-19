@@ -1,0 +1,26 @@
+#!/bin/bash
+
+lag=2000
+dt=1.0
+echo $#
+
+if [ $# -ge 1 ]; then lag=$1; fi
+if [ $# -ge 2 ]; then dt=$2; fi
+cat *.vc.xyz | awk 'BEGIN {nh=0; g=0.73612; }
+!/[OH]/{print $0}; /O/{ox=$2; oy=$2; oz=$3;} 
+/H/{nh++; print $0; if (nh%2==1) {h1x=$2; h1y=$3; h1z=$3} else { 
+ h2x=$2; h2y=$3; h2z=$4;  
+ print "M", g*ox+(1-g)/2.0*(h1x+h2x), g*oz+(1-g)/2.0*(h1z+h2z), g*oz+(1-g)/2.0*(h1z+h2z);} }
+' | trajworks -ixyz -qat ./charges.tip4pf -dpl -ts $dt > dpl.dat
+
+awk '!/#/{print $2}' dpl.dat | autocorr -raw -maxlag $lag -timestep $dt > tmp.x
+awk '!/#/{print $3}' dpl.dat | autocorr -raw -maxlag $lag -timestep $dt > tmp.y
+awk '!/#/{print $4}' dpl.dat | autocorr -raw -maxlag $lag -timestep $dt > tmp.z
+
+for w in x y z; do
+  awk '!/#/{print $2}' tmp.$w | fourier -raw -dt $dt -pad 10000 -win hanning > tmp.f$w
+done
+
+paste tmp.f? | awk '{print $1*5308.8375, ($2+$4+$6)/3}' > dpl.ft
+
+rm tmp.*
