@@ -1,0 +1,18 @@
+#!/bin/bash
+
+lag=2000
+dt=1.0
+echo $#
+
+if [ $# -ge 1 ]; then lag=$1; fi
+if [ $# -ge 2 ]; then dt=$2; fi
+
+awk '{if (NF==4) print $1, $2, $3, $4, $2, $3, $4; else print $0}' *.vc.xyz |  trajworks -ixyz -vvac -raw -vvlag $lag -vvftpad 10000 -vvftbox true -ts $dt > vel.dat
+
+awk '{print $3, $4}' vel.dat > tmp.f
+
+#awk '!/#/{print $2}' vel.dat | fourier -raw -dt $dt -pad 10000 -win hanning > tmp.f
+
+awk '{print $1*5308.8375, $2}' tmp.f > vel.ft
+
+rm tmp.*

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+prefix=$1
+paste ${prefix}_*/dpl.ft | awk '{t2=t=n=0; for (i=2; i<=NF; i+=2) { t+=$i; t2+=$i*$i; n++ } printf "%12.5e  %12.5e  %12.5e\n", $1, t/n, sqrt(t2/n-(t/n)*(t/n))/sqrt(n-1)}' > ${prefix}.dpl
+paste ${prefix}_*/vel.ft | awk '{t2=t=n=0; for (i=2; i<=NF; i+=2) { t+=$i; t2+=$i*$i; n++ } printf "%12.5e  %12.5e  %12.5e\n", $1, t/n, sqrt(t2/n-(t/n)*(t/n))/sqrt(n-1)}' > ${prefix}.vv
+#paste ${prefix}-*/msdcent.dat | awk '{t2=t=n=0; for (i=2; i<=NF; i+=2) { t+=$i; t2+=$i*$i; n++ } printf "%12.5e  %12.5e  %12.5e\n", $1, t/n, sqrt(t2/n-(t/n)*(t/n))/sqrt(n-1)}' > ~rossi/${prefix}.msdcent
