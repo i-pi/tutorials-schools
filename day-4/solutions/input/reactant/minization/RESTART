@@ -1,0 +1,62 @@
+<simulation verbosity='medium' mode='static'>
+   <output prefix='min'>
+      <properties shape='(2)'> [ step, potential{electronvolt} ] </properties>
+      <trajectory filename='xc'>x_centroid{angstrom}</trajectory>
+   </output>
+   <step>32</step>
+   <total_steps>400</total_steps>
+   <ffsocket mode='unix' name='cbe'>
+   </ffsocket>
+   <system>
+      <forces>
+         <force forcefield='cbe'>
+         </force>
+      </forces>
+      <ensemble>
+         <temperature>  1.00000000e+00</temperature>
+         <stress shape='(3, 3)'>
+          [  -1.00000000e+00,  -1.00000000e+00,  -1.00000000e+00,  -1.00000000e+00,  -1.00000000e+00, 
+             -1.00000000e+00,  -1.00000000e+00,  -1.00000000e+00,  -1.00000000e+00 ]
+         </stress>
+         <hamiltonian_weights shape='(1)'> [   1.00000000e+00 ] </hamiltonian_weights>
+      </ensemble>
+      <motion mode='minimize'>
+         <optimizer mode='sd'>
+            <ls_options>
+               <step>  9.66918009e-06</step>
+            </ls_options>
+            <tolerances>
+               <energy>  5.00000000e-05</energy>
+               <force>  5.00000000e-05</force>
+               <position>  5.00000000e-05</position>
+            </tolerances>
+         </optimizer>
+      </motion>
+      <beads natoms='6' nbeads='1'>
+         <q shape='(1, 18)'>
+          [   3.08193707e+00,   2.57506676e+00,   2.17658472e+00,   1.59671482e+00,   1.49232344e+00, 
+              1.25105918e+00,   2.44371128e+00,   1.19951333e-01,  -2.72755494e-02,   3.82774455e-01, 
+              2.76592781e+00,   1.83825153e-01,   4.78669560e-01,   5.08335946e-01,   2.67106918e+00, 
+              1.10153821e+01,   4.11836602e+00,   3.50096686e+00 ]
+         </q>
+         <p shape='(1, 18)'>
+          [   0.00000000e+00,   0.00000000e+00,   0.00000000e+00,   0.00000000e+00,   0.00000000e+00, 
+              0.00000000e+00,   0.00000000e+00,   0.00000000e+00,   0.00000000e+00,   0.00000000e+00, 
+              0.00000000e+00,   0.00000000e+00,   0.00000000e+00,   0.00000000e+00,   0.00000000e+00, 
+              0.00000000e+00,   0.00000000e+00,   0.00000000e+00 ]
+         </p>
+         <m shape='(6)'>
+          [   1.83736223e+03,   2.18941669e+04,   1.83736223e+03,   1.83736223e+03,   1.83736223e+03, 
+              1.83736223e+03 ]
+         </m>
+         <names shape='(6)'>
+          [ H, C, H, H, H, 
+            H ]
+         </names>
+      </beads>
+      <cell shape='(3, 3)'>
+       [   2.00000000e+02,   1.22464680e-14,   1.22464680e-14,   0.00000000e+00,   2.00000000e+02, 
+           1.22464680e-14,   0.00000000e+00,   0.00000000e+00,   2.00000000e+02 ]
+      </cell>
+   </system>
+</simulation>

@@ -1,6 +1,0 @@
-# column   1     --> step : The current simulation time step.
-# column   2     --> potential{electronvolt} : The physical system potential energy.
-    0.00000000e+00     6.18877042e-01   
-    1.00000000e+00     6.18887885e-01   
-    2.00000000e+00     6.18902370e-01   
-    3.00000000e+00     6.18907542e-01   
